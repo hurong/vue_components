@@ -23,12 +23,12 @@
             <slot name="content"></slot>
           </div>
           <div v-if="footer" class="modal-footer">
-              <!-- footer -->
-              <slot name="footer">
-                <button type="button" @click="cancel" class="btn line1-btn">{{ cancelText }}</button>
-                <button type="button" @click="ok" class="btn line1-btn">{{ okText }}</button>
-              </slot>
-            </div>
+            <!-- footer -->
+            <slot name="footer">
+              <button type="button" @click="cancel" class="btn line1-btn">{{ cancelText }}</button>
+              <button type="button" @click="ok" class="btn line1-btn">{{ okText }}</button>
+            </slot>
+          </div>
         </div>
       </div>
       <div class="modal-mask"></div>
@@ -51,6 +51,7 @@
   display: flex;
   justify-content: center;
   z-index: 101;
+  position: relative;
 }
 
 .modal-dialog {
@@ -88,8 +89,10 @@
 }
 
 .modal-footer {
-  display: flex;
-  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 20px;
+  left: calc(50% - 30px);
 }
 
 .line1-btn {
