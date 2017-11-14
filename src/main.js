@@ -15,6 +15,16 @@ require('./styles/index.less');
 Vue.config.productionTip = false;
 // 富文本编辑器
 Vue.use(VueQuillEditor);
+
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  router,
+  store,
+  template: '<App/>',
+  components: { App },
+});
+
 // 把alert方法添加到vue原型上，以后页面直接通过vue实例调用方法
 Vue.prototype.$alert = (title, message, messageDesc, callback) => {
   if (!message && !messageDesc) {
@@ -27,6 +37,7 @@ Vue.prototype.$alert = (title, message, messageDesc, callback) => {
   document.body.appendChild(newDiv);
   new Vue({
     el: newDiv,
+    store,
     components: {
       Alert,
     },
@@ -38,9 +49,14 @@ Vue.prototype.$alert = (title, message, messageDesc, callback) => {
         messageDesc: messageDesc || '',
       },
     },
+    beforeMount() {
+      console.log(111);
+      this.$store.commit('UPDATE_MODAL_COUNT', 'ADD');
+    },
     watch: {
       showAlert(val) {
         if (!val) {
+          this.$store.commit('UPDATE_MODAL_COUNT', 'REMOVE');
           var alertDiv = document.getElementById(newDiv.id);
           if (alertDiv) {
             alertDiv.parentNode.removeChild(alertDiv);
@@ -58,12 +74,3 @@ Vue.prototype.$alert = (title, message, messageDesc, callback) => {
     },
   });
 };
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  store,
-  template: '<App/>',
-  components: { App },
-});

@@ -235,7 +235,9 @@ export default {
 
     },
     okSecodeModal() {
+      this.$alert('test', '弹出的消息', 'alert', () => {
 
+      });
     },
     operate(type) {
       switch (type) {

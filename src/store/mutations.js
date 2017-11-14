@@ -6,6 +6,9 @@ export default {
       state.modalCount += 1;
     }
     if (type === 'REMOVE') {
+      if (state.modalCount === 0) {
+        return;
+      }
       state.modalCount -= 1;
     }
   },
