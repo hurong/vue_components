@@ -1,13 +1,13 @@
 <template v-cloak>
-  <modal :show='show' @close="cancle">
+  <modal :show='show' @close="cancle" :small=true>
     <template slot="title">
-    {{ alert.title }}
+      {{ alert.title }}
     </template>
     <template slot="content">
-      <p class="">
+      <p>
         <b v-html="alert.message"></b>
       </p>
-      <p class="" v-if="alert.messageDesc" v-html="alert.messageDesc"></p>
+      <p class="alert-message-desc" v-if="alert.messageDesc" v-html="alert.messageDesc"></p>
     </template>
     <template slot="footer">
       <button type="button" class="btn line1-btn" @click="cancle">
@@ -16,6 +16,13 @@
     </template>
   </modal>
 </template>
+
+<style>
+.alert-message-desc{
+  margin: 30px;
+}
+</style>
+
 
 <script>
 import Modal from '@/components/modal';

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-link to="/ComponentsCat">components目录</router-link>
+    <img src="./assets/logo.png" class="vue-img">
+    <router-link to="/ComponentsCat">components/directives目录</router-link>
     <router-view></router-view>
   </div>
 </template>
@@ -19,5 +19,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.vue-img {
+  vertical-align: middle;
 }
 </style>

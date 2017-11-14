@@ -48,18 +48,21 @@
 }
 
 .modal {
-  display: flex;
-  justify-content: center;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   z-index: 101;
-  position: relative;
+  color: #2c3e50;
 }
 
 .modal-dialog {
-  width: 500px;
-  height: 360px;
+  width: 600px;
+  height: 400px;
   border: 1px solid #ccc;
   background: #FFF;
   z-index: 100;
+  border-radius: 6px;
 }
 
 .large-modal {
@@ -67,9 +70,21 @@
   height: 600px;
 }
 
+.middle-modal {
+  width: 600px;
+  height: 400px;
+}
+
+.small-modal {
+  width: 460px;
+  height: 300px;
+}
+
 .modal-header {
   height: 40px;
   line-height: 40px;
+  border-bottom: 1px solid #eee;
+  background: #dcefee;
 }
 
 .modal-title {
@@ -82,10 +97,13 @@
   float: right;
   margin: 10px;
   width: 20px;
+  border: 1px solid transparent;
+  background: transparent;
 }
 
 .modal-body {
-  min-height: 200px;
+  margin: 20px auto;
+  text-align: center;
 }
 
 .modal-footer {
