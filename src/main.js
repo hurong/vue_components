@@ -8,11 +8,14 @@ import '../static/ueditor/ueditor.all.js';
 import '../static/ueditor/lang/zh-cn/zh-cn.js';
 import VueQuillEditor from 'vue-quill-editor';
 import Alert from '@/components/alert';
+import store from './store';
 
 require('./styles/index.less');
 
 Vue.config.productionTip = false;
+// 富文本编辑器
 Vue.use(VueQuillEditor);
+// 把alert方法添加到vue原型上，以后页面直接通过vue实例调用方法
 Vue.prototype.$alert = (title, message, messageDesc, callback) => {
   if (!message && !messageDesc) {
     return;
@@ -60,6 +63,7 @@ Vue.prototype.$alert = (title, message, messageDesc, callback) => {
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App },
 });

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="components-cat">
+    <div class="components-cat" style="z-index:106;">
       <ul class="components-list">
         <li @click="operate(cat.value)" v-for="(cat, index) in componentsLeve1List" 
         :key="index" :class="cat.progress ? cat.progress : ''">
@@ -20,6 +20,14 @@
     <modal :show="showModal" @close='closeModal' @ok='okModal'>
       <div slot="content">
         <p>模态框</p>
+        <div class="mt-20">
+          <button class="btn line1-btn" @click='showSecondModal = true'>打开第二个模态框</button>
+        </div>
+      </div>
+    </modal>
+    <modal :show="showSecondModal" @close='closeSecodeModal' @ok='okSecodeModal' :small=true>
+      <div slot="content">
+        <p>我是第二个模态框</p>
       </div>
     </modal>
   </div>
@@ -28,6 +36,7 @@
 <style scoped>
 .components-cat {
   margin: 30px 20px;
+  z-index: 105;
 }
 
 .components-cat .components-list {
@@ -85,6 +94,7 @@ export default {
   data() {
     return {
       showModal: false,
+      showSecondModal: false,
       componentsLeve1List: [
         {
           name: '模态框',
@@ -218,7 +228,13 @@ export default {
     closeModal() {
       this.showModal = false;
     },
+    closeSecodeModal() {
+      this.showSecondModal = false;
+    },
     okModal() {
+
+    },
+    okSecodeModal() {
 
     },
     operate(type) {
