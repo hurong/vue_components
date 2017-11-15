@@ -42,21 +42,21 @@ Vue.prototype.$alert = (title, message, messageDesc, callback) => {
       Alert,
     },
     data: {
-      showAlert: true,
+      showAlert: false,
       alertOption: {
         title: title || '通知',
         message: message || '',
         messageDesc: messageDesc || '',
       },
     },
-    beforeMount() {
-      console.log(111);
-      this.$store.commit('UPDATE_MODAL_COUNT', 'ADD');
+    mounted() {
+      this.showAlert = true;
     },
     watch: {
       showAlert(val) {
         if (!val) {
           this.$store.commit('UPDATE_MODAL_COUNT', 'REMOVE');
+          console.log(this.$store.state.modalCount);
           var alertDiv = document.getElementById(newDiv.id);
           if (alertDiv) {
             alertDiv.parentNode.removeChild(alertDiv);
