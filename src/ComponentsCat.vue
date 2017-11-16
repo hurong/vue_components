@@ -25,9 +25,14 @@
         </div>
       </div>
     </modal>
-    <modal :show="showSecondModal" @close='closeSecodeModal' @ok='okSecodeModal' :small=true>
+    <modal :show="showSecondModal" @close='closeSecondModal' @ok='okSecodeModal' :small=true>
       <div slot="content">
         <p>我是第二个模态框</p>
+      </div>
+    </modal>
+    <modal :show="showFileUploadModal" @close='closeFileUploadModal'>
+      <div slot="content">
+        <file-upload></file-upload>
       </div>
     </modal>
   </div>
@@ -85,16 +90,19 @@
 
 <script>
 import Modal from '@/components/modal';
+import FileUpload from '@/components/FileUpload';
 
 export default {
   name: 'ComponentsCat',
   components: {
     Modal,
+    FileUpload,
   },
   data() {
     return {
       showModal: false,
       showSecondModal: false,
+      showFileUploadModal: false,
       componentsLeve1List: [
         {
           name: '模态框',
@@ -104,12 +112,12 @@ export default {
         {
           name: '弹出框',
           value: 'alert',
-          progress: 'improve',
+          progress: 'done',
         },
         {
           name: '下拉框',
           value: 'selection',
-          progress: 'notStart',
+          progress: 'improve',
         },
         {
           name: '面包屑导航',
@@ -169,7 +177,7 @@ export default {
         {
           name: '上传',
           value: 'upload',
-          progress: 'notStart',
+          progress: 'improve',
         },
         {
           name: '评分',
@@ -216,6 +224,11 @@ export default {
           value: 'aside',
           progress: 'notStart',
         },
+        {
+          name: 'tooltip气泡提示',
+          value: 'tooltip',
+          progress: 'improve',
+        },
       ],
     };
   },
@@ -228,8 +241,11 @@ export default {
     closeModal() {
       this.showModal = false;
     },
-    closeSecodeModal() {
+    closeSecondModal() {
       this.showSecondModal = false;
+    },
+    closeFileUploadModal() {
+      this.showFileUploadModal = false;
     },
     okModal() {
 
@@ -247,6 +263,8 @@ export default {
         case 'alert':
           this.showAlert();
           break;
+        case 'upload':
+          this.showFileUploadModal = true;
         default:
       }
     },

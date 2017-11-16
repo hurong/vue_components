@@ -169,7 +169,6 @@ export default {
     show() {
       if (!this.show) {
         this.$store.commit('UPDATE_MODAL_COUNT', 'REMOVE');
-        console.log('modal0', this.modalCount);
         return;
       }
       // 暂时不用计算页面最大的z-index,遇到一点问题
@@ -177,7 +176,6 @@ export default {
       // console.log(this.$store.state.maxZIndex);
       this.$store.commit('UPDATE_MODAL_COUNT', 'ADD');
       this.modalCount = this.$store.state.modalCount;
-      console.log('modal', this.modalCount);
     },
   },
   // beforeMount() {
