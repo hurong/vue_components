@@ -3,7 +3,7 @@
     <div class="components-cat" style="z-index:106;">
       <ul class="components-list">
         <li @click="operate(cat.value)" v-for="(cat, index) in componentsLeve1List" 
-        :key="index" :class="cat.progress ? cat.progress : ''">
+        :key="index" :class="cat.progress ? cat.progress : ''" v-tooltip="cat.name">
           {{ cat.name }} 
           <template v-if="cat.progress && cat.progress==='improve'">
             <span class="completion-flag">(待完善)</span>
@@ -229,10 +229,17 @@ export default {
           value: 'tooltip',
           progress: 'improve',
         },
+        {
+          name: '复制粘贴',
+          value: 'clipboard',
+          progress: 'notStart',
+        },
       ],
     };
   },
   mounted() {
+    // 测试一个带参数的Vuex getter写法
+    console.log(this.$store.getters.test(1));
   },
   methods: {
     clickShowModalBtn() {

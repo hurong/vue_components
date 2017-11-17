@@ -9,12 +9,18 @@ import '../static/ueditor/lang/zh-cn/zh-cn.js';
 import VueQuillEditor from 'vue-quill-editor';
 import Alert from '@/components/alert';
 import store from './store';
+import directives from './directives';
 
 require('./styles/index.less');
 
 Vue.config.productionTip = false;
 // 富文本编辑器
 Vue.use(VueQuillEditor);
+
+// 引入direcives
+Object.keys(directives).forEach(key => {
+  Vue.directive(key, directives[key]);
+});
 
 /* eslint-disable no-new */
 new Vue({
@@ -23,6 +29,12 @@ new Vue({
   store,
   template: '<App/>',
   components: { App },
+  mounted() {
+    const tooltip = document.createElement('div');
+    tooltip.id = 'tooltip';
+    tooltip.innerHTML = '<div class="arrow"><em></em><span></span></div><div id="tooltipContent"></div>';
+    document.body.appendChild(tooltip);
+  },
 });
 
 // 把alert方法添加到vue原型上，以后页面直接通过vue实例调用方法
