@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <div id="tooltip"><div class="arrow"><em></em><span></span></div><div id="tooltipContent"></div></div>
     <img src="./assets/logo.png" class="vue-img">
     <router-link to="/ComponentsCat">
     <span v-tooltip="'学习vue2.0,自定义组件和自定义指令'">components/directives目录</span>

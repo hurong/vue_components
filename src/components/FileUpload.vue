@@ -67,7 +67,7 @@ export default {
       var fd = new FormData();
       fd.append('fileToUpload', file);
       var xhr = new XMLHttpRequest();
-      xhr.upload.addEventListener('progress', this.uploadProgress, false);
+      xhr.upload.addEventListener('progress', this.uploadProgress, true);
       xhr.addEventListener("load", this.uploadComplete, false);
       xhr.addEventListener("error", this.uploadFailed, false);
       xhr.addEventListener("abort", this.uploadCanceled, false);

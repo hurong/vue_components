@@ -31,13 +31,22 @@ new Vue({
   template: '<App/>',
   components: { App },
   mounted() {
-    let tooltip = Vue.extend({
-      template: `<div id="tooltip"><div class="arrow"><em></em><span></span></div><div id="tooltipContent"></div></div>`,
-    });
-    // const tooltip = document.createElement('div');
-    // tooltip.id = 'tooltip';
-    // tooltip.innerHTML = '<div class="arrow"><em></em><span></span></div><div id="tooltipContent"></div>';
-    // document.body.appendChild(tooltip);
+    // let tooltip = Vue.extend({
+    //   template: `<div id="tooltip"><div class="arrow"><em></em><span></span></div><div id="tooltipContent"></div></div>`,
+    // });
+    const tooltip = document.createElement('div');
+    tooltip.id = 'tooltip';
+    tooltip.innerHTML = '<div class="arrow"><em></em><span></span></div><div id="tooltipContent"></div>';
+    document.body.appendChild(tooltip);
+
+    const tooltipMouseenter = () => {
+      document.getElementById('tooltip').style.display = 'block';
+    };
+    const tooltipMouseleave = () => {
+      document.getElementById('tooltip').style.display = 'none';
+    };
+    document.getElementById('tooltip').addEventListener('mouseenter', tooltipMouseenter, false);
+    document.getElementById('tooltip').addEventListener('mouseleave', tooltipMouseleave, false);
   },
 });
 
