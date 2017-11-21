@@ -1,7 +1,7 @@
+
 <script>
 export default {
   inserted(el, binding) {
-    // const el_left = 
     const getElemPos = (obj) => {
       let pos = { top: 0, left: 0 };
       if (obj.offsetParent) {
@@ -17,17 +17,14 @@ export default {
       }
       return { x: pos.left, y: pos.top };
     };
-
     const mouseenterFn = (event) => {
-      const pos = getElemPos(event);
-      console.log(pos);
+      const pos = getElemPos(el);
       const tooltip = document.getElementById('tooltip');
       const tooltipContent = document.getElementById('tooltipContent');
       event.stopPropagation();
       tooltip.style.display = 'block';
       tooltip.style.left = pos.x + 'px';
-      console.log(el.offsetTop);
-      tooltip.style.top = el.offsetTop + 'px';
+      tooltip.style.top = (pos.y - tooltip.offsetHeight - 10) + 'px';
       tooltipContent.innerHTML = binding.value;
     };
     const mouseleaveFn = (event) => {

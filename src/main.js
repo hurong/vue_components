@@ -10,6 +10,7 @@ import VueQuillEditor from 'vue-quill-editor';
 import Alert from '@/components/alert';
 import store from './store';
 import directives from './directives';
+import $ from 'jquery';
 
 require('./styles/index.less');
 
@@ -30,10 +31,13 @@ new Vue({
   template: '<App/>',
   components: { App },
   mounted() {
-    const tooltip = document.createElement('div');
-    tooltip.id = 'tooltip';
-    tooltip.innerHTML = '<div class="arrow"><em></em><span></span></div><div id="tooltipContent"></div>';
-    document.body.appendChild(tooltip);
+    let tooltip = Vue.extend({
+      template: `<div id="tooltip"><div class="arrow"><em></em><span></span></div><div id="tooltipContent"></div></div>`,
+    });
+    // const tooltip = document.createElement('div');
+    // tooltip.id = 'tooltip';
+    // tooltip.innerHTML = '<div class="arrow"><em></em><span></span></div><div id="tooltipContent"></div>';
+    // document.body.appendChild(tooltip);
   },
 });
 

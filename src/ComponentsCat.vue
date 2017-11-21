@@ -2,9 +2,8 @@
   <div>
     <div class="components-cat" style="z-index:106;">
       <ul class="components-list">
-        <li @click="operate(cat.value)" v-for="(cat, index) in componentsLeve1List" 
-        :key="index" :class="cat.progress ? cat.progress : ''" v-tooltip="cat.name">
-          {{ cat.name }} 
+        <li @click="operate(cat.value)" v-for="(cat, index) in componentsLeve1List" :key="index" :class="cat.progress ? cat.progress : ''" v-tooltip="cat.name">
+          {{ cat.name }}
           <template v-if="cat.progress && cat.progress==='improve'">
             <span class="completion-flag">(待完善)</span>
           </template>
@@ -50,6 +49,7 @@
   width: 100%;
   flex-wrap: wrap;
   max-height: 460px;
+  height: 460px;
 }
 
 .components-cat .components-list li {
@@ -66,17 +66,23 @@
   cursor: pointer;
 }
 
+
 /*组件完成标志*/
+
 .done {
   color: #309e34;
 }
 
+
 /*组件未开始写标志*/
+
 .notStart {
   color: #7e79a5;
 }
 
+
 /*组件开始写仍需要完善标志*/
+
 .improve {
   color: #f5850e;
 }
@@ -85,7 +91,6 @@
   font-size: 10px;
   color: #585050;
 }
-
 </style>
 
 <script>
@@ -232,6 +237,11 @@ export default {
         {
           name: '复制粘贴',
           value: 'clipboard',
+          progress: 'notStart',
+        },
+        {
+          name: '进度条',
+          value: 'progress',
           progress: 'notStart',
         },
       ],

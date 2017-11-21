@@ -19,8 +19,14 @@
         </div>
       </div>
     </div>
+    <!--<div>
+      <progress></progress>
+    </div>-->
     <a href="javascript:;" class="base-ui-upload">
       <input type="file" @change="change">选择文件
+    </a>
+    <a href="javascript:;" class="base-ui-upload" @click="uploadFile">
+      <input type="button">上传文件
     </a>
   </div>
 </template>
@@ -34,11 +40,12 @@ export default {
       fileType: '',
       imgSrc: '',
       hasImg: false,
+      file: null,
     };
   },
   methods: {
     change(e) {
-      console.log(e.target.files[0]);
+      this.file = e.target.files[0];
       this.getFileInfo(e.target.files[0]);
       this.checkFile(e.target.files[0]);
     },
@@ -55,18 +62,24 @@ export default {
       }
     },
 
-    uploadFile(file) {
+    uploadFile() {
+      var file = this.file;
+      var fd = new FormData();
+      fd.append('fileToUpload', file);
       var xhr = new XMLHttpRequest();
       xhr.upload.addEventListener('progress', this.uploadProgress, false);
-      xhr.addEventListener("load", uploadComplete, false);
-      xhr.addEventListener("error", uploadFailed, false);
-      xhr.addEventListener("abort", uploadCanceled, false);
-      xhr.open("POST", "", true);//修改成自己的接口
+      xhr.addEventListener("load", this.uploadComplete, false);
+      xhr.addEventListener("error", this.uploadFailed, false);
+      xhr.addEventListener("abort", this.uploadCanceled, false);
+      xhr.open("POST", "http://upload.qiniu.com/", true);//修改成自己的接口
+      xhr.send(fd);
     },
 
     uploadProgress(evt) {
       if (evt.lengthComputable) {
-        var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+        var percentComplete = Math.round(evt.loaded * 100 / evt.total) + '%';
+        setTimeout(() => {
+        }, 0.1);
       }
     },
 
