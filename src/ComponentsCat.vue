@@ -244,6 +244,11 @@ export default {
           value: 'progress',
           progress: 'notStart',
         },
+        {
+          name: '拖拽',
+          value: 'drag',
+          progress: 'notStart',
+        },
       ],
     };
   },
