@@ -34,6 +34,31 @@
         <file-upload></file-upload>
       </div>
     </modal>
+    <modal :show="showSelectionModal" @close='showSelectionModal = false'>
+      <div slot="content">
+        <selection :img-style='imgStyle'></selection>
+      </div>
+    </modal>
+    <modal :show="showLoadingModal" @close='showLoadingModal = false'>
+      <div slot="content" v-loading='true'>
+        <table style="width:100%;height:100px;border:1px solid #eee;padding:10px;">
+          <thead>
+            <tr>
+              <th>col1</th>
+              <th>col2</th>
+              <th>col3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>test1</td>
+              <td>test2</td>
+              <td>test3</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -67,6 +92,8 @@
 }
 
 
+
+
 /*组件完成标志*/
 
 .done {
@@ -74,11 +101,15 @@
 }
 
 
+
+
 /*组件未开始写标志*/
 
 .notStart {
   color: #7e79a5;
 }
+
+
 
 
 /*组件开始写仍需要完善标志*/
@@ -96,18 +127,26 @@
 <script>
 import Modal from '@/components/modal';
 import FileUpload from '@/components/FileUpload';
+import Selection from '@/components/Select';
 
 export default {
   name: 'ComponentsCat',
   components: {
     Modal,
     FileUpload,
+    Selection,
   },
   data() {
     return {
       showModal: false,
       showSecondModal: false,
       showFileUploadModal: false,
+      showSelectionModal: false,
+      showLoadingModal: false,
+      imgStyle: {
+        width: '80px',
+        height: '80px',
+      },
       componentsLeve1List: [
         {
           name: '模态框',
@@ -137,7 +176,7 @@ export default {
         {
           name: '加载中',
           value: 'loading',
-          progress: 'notStart',
+          progress: 'improve',
         },
         {
           name: '树形菜单',
@@ -287,6 +326,13 @@ export default {
           break;
         case 'upload':
           this.showFileUploadModal = true;
+          break;
+        case 'selection':
+          this.showSelectionModal = true;
+          break;
+        case 'loading':
+          this.showLoadingModal = true;
+          break;
         default:
       }
     },
