@@ -40,7 +40,7 @@
       </div>
     </modal>
     <modal :show="showLoadingModal" @close='showLoadingModal = false'>
-      <div slot="content" v-loading='true'>
+      <div slot="content" v-loading.lg='loading'>
         <table style="width:100%;height:100px;border:1px solid #eee;padding:10px;">
           <thead>
             <tr>
@@ -143,6 +143,7 @@ export default {
       showFileUploadModal: false,
       showSelectionModal: false,
       showLoadingModal: false,
+      loading: true,
       imgStyle: {
         width: '80px',
         height: '80px',
@@ -176,7 +177,7 @@ export default {
         {
           name: '加载中',
           value: 'loading',
-          progress: 'improve',
+          progress: 'done',
         },
         {
           name: '树形菜单',
@@ -332,6 +333,9 @@ export default {
           break;
         case 'loading':
           this.showLoadingModal = true;
+          setTimeout(() => {
+            this.loading = false; 
+          }, 5000);
           break;
         default:
       }
