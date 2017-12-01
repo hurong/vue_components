@@ -333,6 +333,7 @@ export default {
           break;
         case 'loading':
           this.showLoadingModal = true;
+          this.loading = true; // 关闭模态框并没有销毁模态框组件
           setTimeout(() => {
             this.loading = false; 
           }, 5000);
