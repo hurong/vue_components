@@ -36,7 +36,7 @@
     </modal>
     <modal :show="showSelectionModal" @close='showSelectionModal = false'>
       <div slot="content">
-        <selection :img-style='imgStyle'></selection>
+        <selection :select-list='selectList'></selection>
       </div>
     </modal>
     <modal :show="showLoadingModal" @close='showLoadingModal = false'>
@@ -144,10 +144,7 @@ export default {
       showSelectionModal: false,
       showLoadingModal: false,
       loading: true,
-      imgStyle: {
-        width: '80px',
-        height: '80px',
-      },
+      selectList: ['苹果', '香蕉', '橘子', '菠萝', '西瓜'],
       componentsLeve1List: [
         {
           name: '模态框',

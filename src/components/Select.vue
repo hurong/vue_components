@@ -1,25 +1,44 @@
 <template v-cloak>
-<div id='select-template'>
-  <input>
-  <div>
-    <ul>
-      <li>
-        <img src='../assets/logo.png' :style='imgStyle'></img>
-      </li>
-    </ul>
+  <div id='select-template'>
+    <input v-model='selected' class="select-input">
+    <div>
+      <ul>
+        <li v-for='(item, index) in selectList' :key='index'>
+          {{ item }}
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
 </template>
+
+<style>
+#select-template .select-input {
+  height: 24px;
+  line-height: 24px;
+  border-radius: 4px;
+  outline: none;
+  background: none;
+  border: 1px solid #d6d1d1;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+.select-input:after {
+  content: "\e600";
+}
+</style>
 
 <script>
 export default {
   props: {
-    imgStyle: {
-      type: Object,
-      default: () => {
-        return {};
-      },
+    selectList: {
+      type: Array,
+      default: [],
     },
+  },
+  data() {
+    return {
+      selected: '',
+    };
   },
 };
 </script>
