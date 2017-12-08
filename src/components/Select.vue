@@ -1,18 +1,41 @@
 <template v-cloak>
   <div id='select-template'>
-    <input v-model='selected' class="select-input">
-    <div>
+    <div class="select-input">
+      <input :checked='selected' @change="$emit('change', $event.target.checked)" @click='toggle'>
+      <span type="button" class="search" @click='toggle'>
+      </span>
+    </div>
+    <div class="option-item" :style="{display: show}">
       <ul>
-        <li v-for='(item, index) in selectList' :key='index'>
-          {{ item }}
-        </li>
+        <template v-if='text'>
+          <li v-for='(item, index) in selectList' :key='index' @click='select(item)'>
+            {{ item.text }}
+          </li>
+        </template>
+        <template v-else>
+          <li v-for='(item, index) in selectList' :key='index' @click='select(item)'>
+            {{ item }}
+          </li>
+        </template>
       </ul>
     </div>
   </div>
 </template>
 
 <style>
+#select-template {
+  position: relative;
+  display: inline-flex;
+  width: auto;
+}
+
 #select-template .select-input {
+  position: relative;
+  display: inline-flex;
+  width: auto;
+}
+
+#select-template .select-input input {
   height: 24px;
   line-height: 24px;
   border-radius: 4px;
@@ -20,25 +43,90 @@
   background: none;
   border: 1px solid #d6d1d1;
   padding: 2px 6px;
+  text-align: center;
   cursor: pointer;
 }
-.select-input:after {
-  content: "\e600";
+
+#select-template .select-input .search {
+  position: absolute;
+  right: 2px;
+  top: 10px;
+  border: 8px solid transparent;
+  background: transparent;
+  border-color: #e0d9d9 transparent transparent transparent;
+  width: 0;
+  height: 0;
+  cursor: pointer;
+}
+
+#select-template .option-item {
+  width: 183px;
+  margin: 0 auto;
+  position: absolute;
+  top: 30px;
+}
+
+#select-template .option-item li {
+  list-style-type: none;
+  height: 30px;
+  line-height: 30px;
+}
+
+#select-template .option-item li:hover {
+  background: #eee;
+  cursor: pointer;
+}
+
+#select-template .option-item ul {
+  border: 1px solid #eee;
+  margin-top: 2px;
+  top: 30px;
+  left: 0px;
 }
 </style>
 
 <script>
 export default {
+  model: {
+    prop: 'checked',
+    event: 'change',
+  },
   props: {
     selectList: {
       type: Array,
       default: [],
     },
+    value: {
+      type: String,
+      default: 'value',
+    },
+    text: {
+      type: String,
+    },
   },
   data() {
     return {
       selected: '',
+      show: 'none',
     };
+  },
+  methods: {
+    toggle() {
+      if (this.show === 'none') {
+        this.show = 'block';
+      } else {
+        this.show = 'none';
+      }
+    },
+
+    select(item) {
+      if (typeof item === 'object') {
+        this.selected = item[this.text];
+      } else {
+        this.selected = item;
+      }
+      this.show = 'none';
+    },
   },
 };
 </script>

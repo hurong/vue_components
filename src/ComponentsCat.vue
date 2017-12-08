@@ -36,7 +36,8 @@
     </modal>
     <modal :show="showSelectionModal" @close='showSelectionModal = false'>
       <div slot="content">
-        <selection :select-list='selectList'></selection>
+        <selection v-model="selected" :select-list='selectList'></selection>
+        <selection :select-list='selectList1' :value="'value'" :text="'text'"></selection>
       </div>
     </modal>
     <modal :show="showLoadingModal" @close='showLoadingModal = false'>
@@ -136,6 +137,11 @@ export default {
     FileUpload,
     Selection,
   },
+  watch: {
+    selected(val) {
+      console.log(val);
+    },
+  },
   data() {
     return {
       showModal: false,
@@ -144,7 +150,22 @@ export default {
       showSelectionModal: false,
       showLoadingModal: false,
       loading: true,
-      selectList: ['苹果', '香蕉', '橘子', '菠萝', '西瓜'],
+      selected: '',
+      selectList: ['苹果', '香蕉', '橘子', '菠萝', '西瓜'], // 最简单的一种传值
+      selectList1: [
+        {
+          text: '数学',
+          value: 'math',
+        },
+        {
+          text: '英语',
+          value: 'english',
+        },
+        {
+          text: '语文',
+          value: 'chinese',
+        },
+      ],
       componentsLeve1List: [
         {
           name: '模态框',
