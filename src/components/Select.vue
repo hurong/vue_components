@@ -1,7 +1,7 @@
 <template v-cloak>
   <div id='select-template'>
     <div class="select-input">
-      <input :checked='selected' @change="$emit('change', $event.target.checked)" @click='toggle'>
+      <input :value='selected'  @click='toggle' type='text'>
       <span type="button" class="search" @click='toggle'>
       </span>
     </div>
@@ -87,18 +87,18 @@
 
 <script>
 export default {
-  model: {
-    prop: 'checked',
-    event: 'change',
-  },
+  // model: {
+  //   prop: 'value',
+  //   event: 'input',
+  // },
   props: {
     selectList: {
       type: Array,
       default: [],
     },
-    value: {
+    code: {
       type: String,
-      default: 'value',
+      default: 'code',
     },
     text: {
       type: String,
@@ -119,11 +119,16 @@ export default {
       }
     },
 
+    change() {
+    },
+
     select(item) {
       if (typeof item === 'object') {
         this.selected = item[this.text];
+        this.$emit('input', this.selected);
       } else {
         this.selected = item;
+        this.$emit('input', this.selected);
       }
       this.show = 'none';
     },

@@ -37,7 +37,10 @@
     <modal :show="showSelectionModal" @close='showSelectionModal = false'>
       <div slot="content">
         <selection v-model="selected" :select-list='selectList'></selection>
-        <selection :select-list='selectList1' :value="'value'" :text="'text'"></selection>
+        <selection v-model="selected1" :select-list='selectList1' :value="'value'" :text="'text'"></selection>
+        <div style="margin-top:160px;">
+          <span style="margin-right:30px;">选择的水果: {{ selected }}</span> <span>选择的课程: {{ selected1 }}</span>
+        </div>
       </div>
     </modal>
     <modal :show="showLoadingModal" @close='showLoadingModal = false'>
@@ -95,6 +98,7 @@
 
 
 
+
 /*组件完成标志*/
 
 .done {
@@ -104,11 +108,13 @@
 
 
 
+
 /*组件未开始写标志*/
 
 .notStart {
   color: #7e79a5;
 }
+
 
 
 
@@ -137,11 +143,6 @@ export default {
     FileUpload,
     Selection,
   },
-  watch: {
-    selected(val) {
-      console.log(val);
-    },
-  },
   data() {
     return {
       showModal: false,
@@ -151,6 +152,7 @@ export default {
       showLoadingModal: false,
       loading: true,
       selected: '',
+      selected1: '',
       selectList: ['苹果', '香蕉', '橘子', '菠萝', '西瓜'], // 最简单的一种传值
       selectList1: [
         {
@@ -312,7 +314,7 @@ export default {
   },
   mounted() {
     // 测试一个带参数的Vuex getter写法
-    console.log(this.$store.getters.test(1));
+    // console.log(this.$store.getters.test(1));
   },
   methods: {
     clickShowModalBtn() {
@@ -335,6 +337,9 @@ export default {
 
       });
     },
+    selectFruit(e) {
+      console.log(e.target.value);
+    },
     operate(type) {
       switch (type) {
         case 'modal':
@@ -353,7 +358,7 @@ export default {
           this.showLoadingModal = true;
           this.loading = true; // 关闭模态框并没有销毁模态框组件
           setTimeout(() => {
-            this.loading = false; 
+            this.loading = false;
           }, 5000);
           break;
         default:
