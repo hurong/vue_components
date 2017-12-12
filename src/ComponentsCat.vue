@@ -36,9 +36,9 @@
     </modal>
     <modal :show="showSelectionModal" @close='showSelectionModal = false'>
       <div slot="content">
-        <selection v-model="selected" :select-list='selectList'></selection>
-        <selection v-model="selected1" :select-list='selectList1' :value="'value'" :text="'text'"></selection>
-        <div style="margin-top:160px;">
+        <selection :multi='true' v-model="selected" :select-list='selectList'></selection>
+        <selection :multi='true' v-model="selected1" :select-list='selectList1' :value="'value'" :text="'text'"></selection>
+        <div style="margin-top:190px;">
           <span style="margin-right:30px;">选择的水果: {{ selected }}</span> <span>选择的课程: {{ selected1 }}</span>
         </div>
       </div>
@@ -166,6 +166,18 @@ export default {
         {
           text: '语文',
           value: 'chinese',
+        },
+        {
+          text: '物理',
+          value: 'physics',
+        },
+        {
+          text: '化学',
+          value: 'chemical',
+        },
+        {
+          text: '历史',
+          value: 'history',
         },
       ],
       componentsLeve1List: [
