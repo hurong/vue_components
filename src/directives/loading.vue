@@ -3,7 +3,6 @@ export default {
   inserted(el, binding) {
     const load = binding.value;
     const size = Object.keys(binding.modifiers)[0] || 'md';
-    console.log(size);
     const template = `
     <div class='loadEffect'>
         <span></span>
@@ -18,6 +17,7 @@ export default {
 `;
 
     if (load) {
+      console.log('inserted');
       el.style.position = 'relative';
       // console.log(el.children);
       // for (let i = 0; i < el.children.length; i++) {
@@ -31,6 +31,7 @@ export default {
   },
 
   update(el, binding) {
+    console.log('update');
     const load = binding.value;
     if (!load) {
       el.style.display = 'block';

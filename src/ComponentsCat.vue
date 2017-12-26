@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="components-cat" style="z-index:106;">
+      <router-view></router-view>
       <ul class="components-list">
         <li @click="operate(cat.value)" v-for="(cat, index) in componentsLeve1List" :key="index" :class="cat.progress ? cat.progress : ''" v-tooltip="cat.name">
           {{ cat.name }}
@@ -39,7 +40,8 @@
         <selection :multi='true' v-model="selected" :select-list='selectList'></selection>
         <selection :multi='true' v-model="selected1" :select-list='selectList1' :value="'value'" :text="'text'"></selection>
         <div style="margin-top:190px;">
-          <span style="margin-right:30px;">选择的水果: {{ selected }}</span> <span>选择的课程: {{ selected1 }}</span>
+          <span style="margin-right:30px;">选择的水果: {{ selected }}</span>
+          <span>选择的课程: {{ selected1 }}</span>
         </div>
       </div>
     </modal>
@@ -61,6 +63,14 @@
             </tr>
           </tbody>
         </table>
+      </div>
+    </modal>
+    <!--
+      地图-->
+    
+    <modal :show="showMapModal" @close='showMapModal = false' :large=true>
+      <div slot="content">
+        <BaiduMap></BaiduMap>
       </div>
     </modal>
   </div>
@@ -99,6 +109,8 @@
 
 
 
+
+
 /*组件完成标志*/
 
 .done {
@@ -109,11 +121,15 @@
 
 
 
+
+
 /*组件未开始写标志*/
 
 .notStart {
   color: #7e79a5;
 }
+
+
 
 
 
@@ -135,6 +151,7 @@
 import Modal from '@/components/modal';
 import FileUpload from '@/components/FileUpload';
 import Selection from '@/components/Select';
+import BaiduMap from '@/components/map';
 
 export default {
   name: 'ComponentsCat',
@@ -142,6 +159,7 @@ export default {
     Modal,
     FileUpload,
     Selection,
+    BaiduMap,
   },
   data() {
     return {
@@ -150,7 +168,8 @@ export default {
       showFileUploadModal: false,
       showSelectionModal: false,
       showLoadingModal: false,
-      loading: true,
+      showMapModal: false,
+      loading: false,
       selected: '',
       selected1: '',
       selectList: ['苹果', '香蕉', '橘子', '菠萝', '西瓜'], // 最简单的一种传值
@@ -321,6 +340,11 @@ export default {
           value: 'drag',
           progress: 'notStart',
         },
+        {
+          name: '百度地图',
+          value: 'map',
+          progress: 'improve',
+        },
       ],
     };
   },
@@ -372,6 +396,9 @@ export default {
           setTimeout(() => {
             this.loading = false;
           }, 5000);
+          break;
+        case 'map':
+          this.showMapModal = true;
           break;
         default:
       }

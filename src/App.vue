@@ -4,7 +4,11 @@
     <router-link to="/ComponentsCat">
     <span v-tooltip.bottom="'学习vue2.0,自定义组件和自定义指令'">components/directives目录</span>
     </router-link>
-    <router-view></router-view>
+    <router-link to="/ComponentsCat/test">
+    <span>test</span>
+    </router-link>
+    <router-view>
+    </router-view>
   </div>
 </template>
 
