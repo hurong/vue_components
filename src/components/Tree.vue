@@ -1,14 +1,16 @@
 <template>
-  <div class="tree-menu">
-    <ul style="width:200px;margin-left:30px;text-align: left;">
-      <li v-for="(item, index) in nodes" :key="index">
-        <i class="fa fa-chevron-down"></i>
+  <ul style="width:300px;text-align: left;" class="tree-menu">
+    <template v-for="(item, index) in nodes">
+      <li :style="{paddingLeft:(30 + 25*depth) + 'px'}" @click="toogleMenu($event)" :key="index">
+        <i class="fa fa-chevron-down" v-if="item[children]" @click.stop="toogleMenu($event)"></i>
+        <!--<i class="fa fa-chevron-up" v-else-if="item[children] && clickIndex===index"></i>-->
+        <i class="fa fa-file-o" v-else></i>
         {{ item[text] }}
-        <tree-menu :nodes="item[children]" :text="text" :value="value" :children="children">
-        </tree-menu>
       </li>
-    </ul>
-  </div>
+      <tree-menu v-if="item[children]" :nodes="item[children]" :text="text" :value="value" :children="children" :depth="depth+1">
+      </tree-menu>
+    </template>
+  </ul>
 </template>
 
 <script>
@@ -70,13 +72,47 @@ export default {
       default: 0,
     },
   },
+  data() {
+    return {
+      show: true,
+      clickIndex: -1,
+    };
+  },
   name: 'tree-menu',
+  methods: {
+    toogleMenu(e) {
+      let ul = null;
+      if (e.target.nodeName === 'I') {
+        ul = e.target.parentNode.nextElementSibling;
+      } else {
+        ul = e.target.nextElementSibling;
+      }
+      console.log(ul);
+      if (ul && ul.tagName === 'UL') {
+        if (ul.style.display === 'none') {
+          ul.style.display = 'block';
+        } else {
+          ul.style.display = 'none';
+        }
+      }
+    },
+  },
 };
 </script>
 
 <style>
 .tree-menu li {
   list-style: none;
+  height: 30px;
+  line-height: 30px;
+  background: #eee;
+  margin-top: 1px;
+  border-radius: 3px;
+}
+
+.tree-menu li:hover {
+  cursor: pointer;
+  background: #ababab;
 }
 </style>
 
