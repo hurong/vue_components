@@ -66,11 +66,21 @@
       </div>
     </modal>
     <!--
-      地图-->
-    
+          地图-->
+
     <modal :show="showMapModal" @close='showMapModal = false' :large=true>
       <div slot="content">
         <BaiduMap></BaiduMap>
+      </div>
+    </modal>
+
+    <!--
+          treeMenu树形菜单-->
+
+    <modal :show="showTreeMenuModal" @close='showTreeMenuModal = false'>
+      <div slot="content">
+        <div>树形菜单</div>
+        <TreeMenu :nodes="treeData"></TreeMenu>
       </div>
     </modal>
   </div>
@@ -111,6 +121,8 @@
 
 
 
+
+
 /*组件完成标志*/
 
 .done {
@@ -123,11 +135,15 @@
 
 
 
+
+
 /*组件未开始写标志*/
 
 .notStart {
   color: #7e79a5;
 }
+
+
 
 
 
@@ -152,6 +168,7 @@ import Modal from '@/components/modal';
 import FileUpload from '@/components/FileUpload';
 import Selection from '@/components/Select';
 import BaiduMap from '@/components/map';
+import TreeMenu from '@/components/Tree';
 
 export default {
   name: 'ComponentsCat',
@@ -160,6 +177,7 @@ export default {
     FileUpload,
     Selection,
     BaiduMap,
+    TreeMenu,
   },
   data() {
     return {
@@ -169,6 +187,7 @@ export default {
       showSelectionModal: false,
       showLoadingModal: false,
       showMapModal: false,
+      showTreeMenuModal: false,
       loading: false,
       selected: '',
       selected1: '',
@@ -233,7 +252,7 @@ export default {
         {
           name: '树形菜单',
           value: 'tree',
-          progress: 'notStart',
+          progress: 'improve',
         },
         {
           name: 'Tab页',
@@ -346,6 +365,38 @@ export default {
           progress: 'improve',
         },
       ],
+      treeData: [
+        {
+          text: 'root',
+          value: 'root',
+          children: [
+            {
+              text: '一级菜单TEST1',
+              value: 'test1',
+              children: [
+                {
+                  text: '二级菜单1-1',
+                  value: 'test1-1',
+                },
+                {
+                  text: '二级菜单1-2',
+                  value: 'test1-2',
+                  children: [
+                    {
+                      text: '三级菜单1-2',
+                      value: 'test1-2-1',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              text: '一级菜单TEST2',
+              value: 'test2',
+            },
+          ],
+        },
+      ],
     };
   },
   mounted() {
@@ -399,6 +450,9 @@ export default {
           break;
         case 'map':
           this.showMapModal = true;
+          break;
+        case 'tree':
+          this.showTreeMenuModal = true;
           break;
         default:
       }
