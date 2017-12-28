@@ -80,7 +80,7 @@
     <modal :show="showTreeMenuModal" @close='showTreeMenuModal = false' :large=true>
       <div slot="content">
         <div>树形菜单</div>
-        <TreeMenu :nodes="treeData"></TreeMenu>
+        <TreeMenu :nodes="treeData" @select-menu="selectMenu"></TreeMenu>
       </div>
     </modal>
   </div>
@@ -456,6 +456,9 @@ export default {
     },
     selectFruit(e) {
       console.log(e.target.value);
+    },
+    selectMenu(node) {
+      console.log(node);
     },
     operate(type) {
       switch (type) {

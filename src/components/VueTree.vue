@@ -1,12 +1,14 @@
 <template>
   <ul style="width:300px;text-align: left;" class="tree-menu">
     <li v-for="(item, index) in nodes" :key="index">
-      <div class="tree-item"  @click.stop="toogleMenu(item)" :style="{paddingLeft:(30 + 25*depth) + 'px'}">
+      <div class="tree-item"  @click.stop="toogleMenu(item)" 
+      :style="{paddingLeft:(30 + 25*depth) + 'px'}">
         <i class="fa" v-if="item[children]" :class="[item.expanded ? 'fa-chevron-down':'fa-chevron-up']"></i>
         <i class="fa fa-file-o" v-else></i>
         <a>{{ item[text] }}</a>
       </div>
-      <vue-tree v-if="item.expanded" :nodes="item[children]" :text="text" :value="value" :children="children" :depth="depth+1">
+      <vue-tree v-if="item.expanded" :nodes="item[children]" :text="text" :value="value" 
+      :children="children" :depth="depth+1" @select-menu="selectMenu">
       </vue-tree>
     </li>
   </ul>
@@ -48,6 +50,10 @@ export default {
   methods: {
     toogleMenu(node) {
       this.$set(node, 'expanded', !node.expanded);
+      this.$emit('select-menu', node);// 发送事件出去，父组件可以获取选中的菜单
+    },
+    selectMenu(node) {
+      this.$emit('select-menu', node);// 层层把事件传递出去
     },
   },
 };
@@ -64,6 +70,10 @@ export default {
   margin-bottom: 1px;
   padding-left: 20px;
   box-sizing: border-box;
+}
+
+.tree-menu .tree-item:hover {
+  background: #ccc;
 }
 
 .tree-menu li {
