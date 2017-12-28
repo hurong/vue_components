@@ -66,7 +66,7 @@
       </div>
     </modal>
     <!--
-          地图-->
+              地图-->
 
     <modal :show="showMapModal" @close='showMapModal = false' :large=true>
       <div slot="content">
@@ -75,9 +75,9 @@
     </modal>
 
     <!--
-          treeMenu树形菜单-->
+              treeMenu树形菜单-->
 
-    <modal :show="showTreeMenuModal" @close='showTreeMenuModal = false'>
+    <modal :show="showTreeMenuModal" @close='showTreeMenuModal = false' :large=true>
       <div slot="content">
         <div>树形菜单</div>
         <TreeMenu :nodes="treeData"></TreeMenu>
@@ -123,6 +123,8 @@
 
 
 
+
+
 /*组件完成标志*/
 
 .done {
@@ -137,11 +139,15 @@
 
 
 
+
+
 /*组件未开始写标志*/
 
 .notStart {
   color: #7e79a5;
 }
+
+
 
 
 
@@ -168,7 +174,7 @@ import Modal from '@/components/modal';
 import FileUpload from '@/components/FileUpload';
 import Selection from '@/components/Select';
 import BaiduMap from '@/components/map';
-import TreeMenu from '@/components/Tree';
+import TreeMenu from '@/components/VueTree';
 
 export default {
   name: 'ComponentsCat',
@@ -367,32 +373,56 @@ export default {
       ],
       treeData: [
         {
-          text: 'root',
-          value: 'root',
+          text: 'row1',
+          value: 'row1',
           children: [
             {
-              text: '一级菜单TEST1',
-              value: 'test1',
+              text: 'row1-1',
+              value: 'row1-1',
               children: [
                 {
-                  text: '二级菜单1-1',
-                  value: 'test1-1',
-                },
-                {
-                  text: '二级菜单1-2',
-                  value: 'test1-2',
+                  text: 'row1-1-1',
+                  value: 'row1-1-1',
                   children: [
                     {
-                      text: '三级菜单1-2',
-                      value: 'test1-2-1',
+                      text: 'row1-1-1-1',
+                      value: 'row1-1-1-1',
+                    },
+                    {
+                      text: 'row1-1-1-2',
+                      value: 'row1-1-1-2',
+                    },
+                  ],
+                },
+                {
+                  text: 'row1-1-2',
+                  value: 'row1-1-2',
+                  children: [
+                    {
+                      text: 'row1-1-2-1',
+                      value: 'row1-1-2-1',
+                    },
+                    {
+                      text: 'row1-1-2-2',
+                      value: 'row1-1-2-2',
                     },
                   ],
                 },
               ],
             },
             {
-              text: '一级菜单TEST2',
-              value: 'test2',
+              text: 'row1-2',
+              value: 'row1-2',
+            },
+          ],
+        },
+        {
+          text: 'row2',
+          value: 'row2',
+          children: [
+            {
+              text: 'row2-1',
+              value: 'row2-1',
             },
           ],
         },
