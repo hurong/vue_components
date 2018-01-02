@@ -66,7 +66,7 @@
       </div>
     </modal>
     <!--
-              地图-->
+                    地图-->
 
     <modal :show="showMapModal" @close='showMapModal = false' :large=true>
       <div slot="content">
@@ -75,12 +75,22 @@
     </modal>
 
     <!--
-              treeMenu树形菜单-->
+                    treeMenu树形菜单-->
 
     <modal :show="showTreeMenuModal" @close='showTreeMenuModal = false' :large=true>
       <div slot="content">
         <div>树形菜单</div>
         <TreeMenu :nodes="treeData" @select-menu="selectMenu"></TreeMenu>
+      </div>
+    </modal>
+
+    <!--
+                    轮播图-->
+
+    <modal :show="showSwiperModal" @close='showSwiperModal = false' :large=true>
+      <div slot="content">
+        <div>轮播图</div>
+        <swiper :img-list="imgList"></swiper>
       </div>
     </modal>
   </div>
@@ -125,6 +135,9 @@
 
 
 
+
+
+
 /*组件完成标志*/
 
 .done {
@@ -141,11 +154,17 @@
 
 
 
+
+
+
 /*组件未开始写标志*/
 
 .notStart {
   color: #7e79a5;
 }
+
+
+
 
 
 
@@ -175,6 +194,8 @@ import FileUpload from '@/components/FileUpload';
 import Selection from '@/components/Select';
 import BaiduMap from '@/components/map';
 import TreeMenu from '@/components/VueTree';
+import Swiper from '@/components/Swiper';
+import img1 from '@/assets/4.jpg';
 
 export default {
   name: 'ComponentsCat',
@@ -184,6 +205,7 @@ export default {
     Selection,
     BaiduMap,
     TreeMenu,
+    Swiper,
   },
   data() {
     return {
@@ -194,6 +216,7 @@ export default {
       showLoadingModal: false,
       showMapModal: false,
       showTreeMenuModal: false,
+      showSwiperModal: false,
       loading: false,
       selected: '',
       selected1: '',
@@ -263,7 +286,7 @@ export default {
         {
           name: 'Tab页',
           value: 'tab',
-          progress: 'notStart',
+          progress: 'improve',
         },
         {
           name: '日期组件',
@@ -370,6 +393,16 @@ export default {
           value: 'map',
           progress: 'improve',
         },
+        {
+          name: '穿梭框',
+          value: 'transfer',
+          progress: 'notStart',
+        },
+        {
+          name: '轮播图',
+          value: 'swiper',
+          progress: 'improve',
+        },
       ],
       treeData: [
         {
@@ -426,6 +459,12 @@ export default {
             },
           ],
         },
+      ],
+      imgList: [ // vue引入图片的方式 http://www.jb51.net/article/119782.htm
+        '../static/imgs/1.jpg',
+        img1,
+        '../static/imgs/2.jpg',
+        '../static/imgs/3.jpg',
       ],
     };
   },
@@ -486,6 +525,9 @@ export default {
           break;
         case 'tree':
           this.showTreeMenuModal = true;
+          break;
+        case 'swiper':
+          this.showSwiperModal = true;
           break;
         default:
       }
