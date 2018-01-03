@@ -1,9 +1,11 @@
 <template>
   <div class="vue-swiper" id="vue-swiper">
-    <div :style="{height: height}" class="img-item">
+    <div :style="{height: height}" class="img-item" @mouseover="enterSwiper" @mouseout="outSwiper">
       <!--<img :src="imgList[index]" v-for="(img, index) in imgList" :key="index" 
                 :style="{ left: 0 + 'px', top: 0 + 'px', transform: 'translateX(' + index * 100 + '%) scale(1)' }">-->
-      <img :src="imgList[index]" v-for="(img, index) in imgList" :key="index" :style="{transform: 'translateX(' + transformXList[index] + '%) scale(1)'}" class="swiper-img-item" :class="activeIndex === index ? 'active': ''">
+      <img :src="imgList[index]" v-for="(img, index) in imgList" :key="index" 
+      :style="{transform: 'translateX(' + transformXList[index] + '%) scale(1)'}" 
+      class="swiper-img-item" :class="transformXList[index]===-100 || transformXList[index]===0 ? 'active': ''">
       <button type="button" class="arrow arrow-left" @click="prev">
         <i class="fa fa-angle-left fa-lg"></i>
       </button>
@@ -27,19 +29,30 @@ export default {
         return [];
       },
     },
+    autoPlay: {
+      type: Boolean,
+      default: false, // true自动播放
+    },
   },
   data() {
     return {
       transformXList: [],
-      activeIndex: 0,
+      interval: null,
     };
   },
   mounted() {
     for (let i = 0; i < this.imgList.length; i++) {
       this.transformXList.push((i - 1) * 100);
     }
+
+    if (this.autoPlay) {
+      this.play();
+    }
   },
   methods: {
+    play() {
+      this.interval = setInterval(this.next, 1500);
+    },
     next() {
       const imgLength = this.imgList.length;
       if (imgLength > 1) {
@@ -47,9 +60,6 @@ export default {
           if (this.transformXList[i] === -100) {
             this.$set(this.transformXList, i, (imgLength - 2) * 100);
           } else {
-            if (this.transformXList[i] === 100) {
-              this.activeIndex = i;
-            }
             this.$set(this.transformXList, i, this.transformXList[i] - 100);
           }
         }
@@ -63,12 +73,22 @@ export default {
           if (this.transformXList[i] === (imgLength - 2) * 100) {
             this.$set(this.transformXList, i, -100);
           } else {
-            if (this.transformXList[i] === -100) {
-              this.activeIndex = i;
-            }
             this.$set(this.transformXList, i, this.transformXList[i] + 100);
           }
         }
+      }
+    },
+
+// 鼠标移入的时候，如果轮播图是自动播放，则停止
+    enterSwiper() {
+      if (this.autoPlay) {
+        clearInterval(this.interval);
+      }
+    },
+// 鼠标移出的时候，如果轮播图是自动播放，则继续播放
+    outSwiper() {
+      if (this.autoPlay) {
+        this.play();
       }
     },
   },
@@ -93,7 +113,7 @@ export default {
 }
 
 .vue-swiper .img-item img.active {
-  transition: transform .4s ease-in-out;
+  transition: transform .6s ease-in-out;
 }
 
 .vue-swiper .img-item .arrow {

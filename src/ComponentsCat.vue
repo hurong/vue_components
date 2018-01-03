@@ -90,7 +90,7 @@
     <modal :show="showSwiperModal" @close='showSwiperModal = false' :large=true>
       <div slot="content">
         <div>轮播图</div>
-        <swiper :img-list="imgList"></swiper>
+        <swiper :img-list="imgList" :auto-play="true"></swiper>
       </div>
     </modal>
   </div>
