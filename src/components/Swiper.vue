@@ -4,8 +4,9 @@
       <!--<img :src="imgList[index]" v-for="(img, index) in imgList" :key="index" 
                 :style="{ left: 0 + 'px', top: 0 + 'px', transform: 'translateX(' + index * 100 + '%) scale(1)' }">-->
       <img :src="imgList[index]" v-for="(img, index) in imgList" :key="index" 
-      :style="{transform: 'translateX(' + transformXList[index] + '%) scale(1)'}" 
-      class="swiper-img-item" :class="transformXList[index]===-100 || transformXList[index]===0 ? 'active': ''">
+      :style="{left: transformXList[index] +'%'}" 
+      class="swiper-img-item" :class="(transformXList[index]===-100 || transformXList[index]===0)&&clickNext?'active':
+      (transformXList[index]===100 || transformXList[index]===0)&&clickPrev?'active':''">
       <button type="button" class="arrow arrow-left" @click="prev">
         <i class="fa fa-angle-left fa-lg"></i>
       </button>
@@ -38,6 +39,8 @@ export default {
     return {
       transformXList: [],
       interval: null,
+      clickNext: false, // 为了修复向左向右轮播动画的bug
+      clickPrev: false,
     };
   },
   mounted() {
@@ -55,6 +58,23 @@ export default {
     },
     next() {
       const imgLength = this.imgList.length;
+      this.clickNext = true;
+      this.clickPre = false;
+      if (imgLength > 1) {
+        for (let i = 0; i < this.transformXList.length; i++) {
+          if (this.transformXList[i] === -100) {
+            this.$set(this.transformXList, i, (imgLength - 2) * 100);
+          } else {
+            this.$set(this.transformXList, i, this.transformXList[i] - 100);
+          }
+        }
+      }
+    },
+
+    nextTransition() {
+      const imgLength = this.imgList.length;
+      this.clickNext = true;
+      this.clickPre = false;
       if (imgLength > 1) {
         for (let i = 0; i < this.transformXList.length; i++) {
           if (this.transformXList[i] === -100) {
@@ -68,6 +88,8 @@ export default {
 
     prev() {
       const imgLength = this.imgList.length;
+      this.clickNext = false;
+      this.clickPrev = true;
       if (imgLength > 1) {
         for (let i = 0; i < this.transformXList.length; i++) {
           if (this.transformXList[i] === (imgLength - 2) * 100) {
@@ -113,7 +135,7 @@ export default {
 }
 
 .vue-swiper .img-item img.active {
-  transition: transform .6s ease-in-out;
+  transition: left 1s ease-in-out;
 }
 
 .vue-swiper .img-item .arrow {
