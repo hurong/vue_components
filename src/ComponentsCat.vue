@@ -35,6 +35,14 @@
         <file-upload></file-upload>
       </div>
     </modal>
+
+    <!-- dropzone 文件上传 可拖拽-->
+    <modal :show="showDropzoneModal" @close='showDropzoneModal = false'>
+      <div slot="content">
+        <p></p>
+        <Dropzone></Dropzone>
+      </div>
+    </modal>
     <modal :show="showSelectionModal" @close='showSelectionModal = false'>
       <div slot="content">
         <selection :multi='true' v-model="selected" :select-list='selectList'></selection>
@@ -66,7 +74,7 @@
       </div>
     </modal>
     <!--
-                    地图-->
+                                  地图-->
 
     <modal :show="showMapModal" @close='showMapModal = false' :large=true>
       <div slot="content">
@@ -75,7 +83,7 @@
     </modal>
 
     <!--
-                    treeMenu树形菜单-->
+                                  treeMenu树形菜单-->
 
     <modal :show="showTreeMenuModal" @close='showTreeMenuModal = false' :large=true>
       <div slot="content">
@@ -85,12 +93,66 @@
     </modal>
 
     <!--
-                    轮播图-->
+                                  面包屑导航-->
+
+    <modal :show="showBreadCrumbModal" @close='showBreadCrumbModal = false' :large=true>
+      <div slot="content">
+        <div>面包屑导航</div>
+        <div class="content">
+          <div class="side-menu" style="float:left;width:30%;height:200px;">
+            <router-link to="/news" class="menu-level level-1">
+              News
+            </router-link>
+            <router-link to="/news/news1" class="menu-level level-2">
+              News1
+            </router-link>
+            <router-link to="/news/news1/content1" class="menu-level level-3">
+              content1
+            </router-link>
+            <router-link to="/news/news1/content2" class="menu-level level-3">
+              content2
+            </router-link>                                      
+            <router-link to="/news/news2" class="menu-level level-2">
+              News2
+            </router-link> 
+            <router-link to="/news/news2/content" class="menu-level level-3">
+              content
+            </router-link>                       
+            <router-link to="/home" class="menu-level level-1">
+              Home
+            </router-link>
+          </div>
+          <div class="right-content" style="float:left;width:70%;height:200px;">
+            <router-view>
+            </router-view>
+            <div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </modal>
+
+    <!--
+                                  轮播图-->
 
     <modal :show="showSwiperModal" @close='showSwiperModal = false' :large=true>
       <div slot="content">
         <div>轮播图</div>
         <swiper :img-list="imgList" :auto-play="true"></swiper>
+      </div>
+    </modal>
+
+    <!-- 多选框 -->
+    <modal :show="showCheckBoxModal" @close="showCheckBoxModal = false">
+      <div slot="content">
+        <div>多选框</div>
+        <Checkbox :list='checkboxList' :selected.sync="selectedCheckboxList"></Checkbox>
+        <div>
+          <div v-for='(item, index) in selectedCheckboxList' :key="index">
+            <input type='text' v-model=item.content />
+          </div>
+        </div>
       </div>
     </modal>
   </div>
@@ -126,18 +188,6 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /*组件完成标志*/
 
 .done {
@@ -145,35 +195,11 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /*组件未开始写标志*/
 
 .notStart {
   color: #7e79a5;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*组件开始写仍需要完善标志*/
@@ -186,15 +212,42 @@
   font-size: 10px;
   color: #585050;
 }
+
+.side-menu .menu-level {
+  display: block;
+  height: 30px;
+  width: 180px;
+  line-height: 30px;
+  background: #eee;
+  border: 1px solid #d1cece;
+  margin-bottom: 1px;
+  text-align: left;
+}
+
+.side-menu .level-1 {
+  padding-left: 20px;
+}
+
+.side-menu .level-2 {
+  width: 160px;
+  padding-left: 40px;
+}
+
+.side-menu .level-3 {
+  width: 140px;
+  padding-left: 60px;
+}
 </style>
 
 <script>
 import Modal from '@/components/modal';
 import FileUpload from '@/components/FileUpload';
 import Selection from '@/components/Select';
+import Checkbox from '@/components/Checkbox';
 import BaiduMap from '@/components/map';
 import TreeMenu from '@/components/VueTree';
 import Swiper from '@/components/Swiper';
+import Dropzone from '@/components/Dropzone';
 import img1 from '@/assets/4.jpg';
 
 export default {
@@ -206,6 +259,8 @@ export default {
     BaiduMap,
     TreeMenu,
     Swiper,
+    Checkbox,
+    Dropzone,
   },
   data() {
     return {
@@ -217,6 +272,9 @@ export default {
       showMapModal: false,
       showTreeMenuModal: false,
       showSwiperModal: false,
+      showCheckBoxModal: false,
+      showDropzoneModal: false,
+      showBreadCrumbModal: false,
       loading: false,
       selected: '',
       selected1: '',
@@ -247,6 +305,24 @@ export default {
           value: 'history',
         },
       ],
+      checkboxList: [
+        {
+          text: '姓名',
+          value: 'name',
+          content: '姓名',
+        },
+        {
+          text: '手机',
+          value: 'tel',
+          content: '手机',
+        },
+        {
+          text: '公司',
+          value: 'company',
+          content: '公司',
+        },
+      ],
+      selectedCheckboxList: [],
       componentsLeve1List: [
         {
           name: '模态框',
@@ -266,7 +342,7 @@ export default {
         {
           name: '面包屑导航',
           value: 'breadCrumb',
-          progress: 'notStart',
+          progress: 'improve',
         },
         {
           name: '分页',
@@ -306,7 +382,7 @@ export default {
         {
           name: '多选框',
           value: 'checkbox',
-          progress: 'notStart',
+          progress: 'improve',
         },
         {
           name: '级联选择器',
@@ -403,6 +479,11 @@ export default {
           value: 'swiper',
           progress: 'improve',
         },
+        {
+          name: 'dropzone上传',
+          value: 'dropzone',
+          progress: 'improve',
+        },
       ],
       treeData: [
         {
@@ -468,6 +549,11 @@ export default {
       ],
     };
   },
+  watch: {
+    '$route'(to, from) {
+      console.log(this.$route)
+    }
+  },
   mounted() {
     // 测试一个带参数的Vuex getter写法
     // console.log(this.$store.getters.test(1));
@@ -528,6 +614,15 @@ export default {
           break;
         case 'swiper':
           this.showSwiperModal = true;
+          break;
+        case 'checkbox':
+          this.showCheckBoxModal = true;
+          break;
+        case 'dropzone':
+          this.showDropzoneModal = true;
+          break;
+        case 'breadCrumb':
+          this.showBreadCrumbModal = true;
           break;
         default:
       }

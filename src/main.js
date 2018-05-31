@@ -23,6 +23,15 @@ Object.keys(directives).forEach(key => {
   Vue.directive(key, directives[key]);
 });
 
+// 假如当前页面是b页面，是由a页面点击过来的，现在b页面点击返回键，不能返回到a页面
+router.beforeEach((to, from, next) => {
+  if (to.name === 'Hello' && from.name === 'ComponentsCat') {
+    next(false);
+  } else {
+    next();
+  }
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

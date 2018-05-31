@@ -115,7 +115,7 @@
   position: absolute;
   right: 2px;
   top: 50%;
-  transform: translate(0, -50% + 2px);
+  transform: translate(-50%, calc(-50% + 2px));
   border: 8px solid transparent;
   background: transparent;
   border-color: #e0d9d9 transparent transparent transparent;
@@ -155,7 +155,7 @@
   padding: 6px;
   border-radius: 4px;
   display: inline-block;
-  margin-top: 4px;
+  /*margin-top: 4px;*/
 }
 
 #select-template .multi-select-item:hover {
