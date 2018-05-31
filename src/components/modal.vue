@@ -1,7 +1,7 @@
 <template v-cloak>
   <transition>
     <div v-if='show'>
-      <div class="modal">
+      <div class="modal" :style="{ zIndex: 1000 + 2*modalCount}">
         <div class="modal-dialog" :class="modalClass">
 
           <!-- Header -->
@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-      <div class="modal-mask"></div>
+      <div class="modal-mask" :style="{ zIndex: 1000 + 2*modalCount - 1}"></div>
     </div>
   </transition>
 </template>
@@ -45,14 +45,16 @@
   height: 100%;
   background: #000;
   opacity: 0.5;
+  /*z-index: 100;*/
 }
 
 .modal {
+  /*z-index: 101;*/
+  background: #FFF;
   position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  z-index: 101;
   color: #2c3e50;
 }
 
@@ -60,8 +62,6 @@
   width: 600px;
   height: 400px;
   border: 1px solid #ccc;
-  background: #FFF;
-  z-index: 100;
   border-radius: 6px;
 }
 
@@ -112,19 +112,6 @@
   margin-bottom: 20px;
   left: calc(50% - 30px);
 }
-
-.line1-btn {
-  width: 60px;
-  height: 30px;
-  background: #fff;
-  border: 1px solid transparent;
-  border-color: #ececec;
-}
-
-.btn:hover {
-  cursor: pointer;
-  background: #eee;
-}
 </style>
 
 <script>
@@ -133,7 +120,7 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     title: {
       type: String,
@@ -173,6 +160,36 @@ export default {
       };
     },
   },
+  data() {
+    return {
+      modalCount: 0,
+    };
+  },
+  watch: {
+    show() {
+      if (!this.show) {
+        this.$store.commit('UPDATE_MODAL_COUNT', 'REMOVE');
+        return;
+      }
+      // 暂时不用计算页面最大的z-index,遇到一点问题
+      // this.$store.commit('GET_MAX_ZINDEX');
+      // console.log(this.$store.state.maxZIndex);
+      this.$store.commit('UPDATE_MODAL_COUNT', 'ADD');
+      this.modalCount = this.$store.state.modalCount;
+    },
+  },
+  // beforeMount() {
+  //   if (!this.show) {
+  //     return;
+  //   }
+  //   console.log(this.$store.commit('GET_MAX_ZINDEX'));
+  //   this.$store.commit('UPDATE_MODAL_COUNT', 'ADD');
+  // },
+
+  // beforeDestroy() {
+  //   this.$store.commit('UPDATE_MODAL_COUNT', 'REMOVE');
+  // },
+
   methods: {
     cancel() {
       this.$emit('close');

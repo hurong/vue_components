@@ -1,5 +1,5 @@
 <template v-cloak>
-  <modal :show='show' @close="cancle" :small=true>
+  <modal :show.sync='show' @close="cancle" :small=true>
     <template slot="title">
       {{ alert.title }}
     </template>
